@@ -1,0 +1,8 @@
+CC energy:
+h^{m}_{m} + \frac{\tau^{dc}_{mn} u^{mn}_{dc}}{4} + \frac{u^{mn}_{mn}}{2}
+
+CC dE_H1/(dLijab):
+- h^{m}_{i} \tau^{ba}_{jm} P(ij) + h^{a}_{c} \tau^{bc}_{ji} P(ab)
+
+CC dE_H2/(dLijab):
+- \frac{\tau^{dc}_{jm} \tau^{ba}_{in}}{2} u^{mn}_{dc} P(ij) + \frac{\tau^{dc}_{ji} \tau^{ba}_{mn}}{4} u^{mn}_{dc} + \frac{\tau^{dc}_{ji} u^{ba}_{dc}}{2} - \tau^{ac}_{im} \tau^{bd}_{jn} u^{mn}_{dc} P(ij) + \tau^{ac}_{im} u^{bm}_{jc} P(ab) P(ij) - \frac{\tau^{ac}_{ji} \tau^{bd}_{mn}}{2} u^{mn}_{dc} P(ab) - \tau^{ac}_{ji} u^{bm}_{cm} P(ab) + \frac{\tau^{ba}_{mn} u^{mn}_{ji}}{2} + \tau^{ba}_{im} u^{mn}_{jn} P(ij) + u^{ba}_{ji}
