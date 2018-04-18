@@ -15,7 +15,6 @@ def get_hamiltonian():
     h = AntiSymmetricTensor("h", (p,), (q,))
     u = AntiSymmetricTensor("u", (p, r), (q, s))
 
-    # TODO: There might be a problem with the indices. Check result
     h = h * Fd(p) * F(q)
     u = u * Fd(p) * Fd(r) * F(s) * F(q)
 
