@@ -79,11 +79,16 @@ one_body_eq = wicks(Fd(j) * F(b) *Fd(i) * F(a) * equation_h, **wicks_kwargs)
 
 p = PermutationOperator
 one_body_eq = simplify_index_permutations(one_body_eq, [p(a, b), p(i, j)])
-print (latex(substitute_dummies(one_body_eq, **sub_kwargs)))
+one_body_eq = substitute_dummies(one_body_eq, **sub_kwargs)
+print (latex(one_body_eq))
 
 two_body_eq = wicks(Fd(j) * F(b) * Fd(i) * F(a) * equation_u, **wicks_kwargs)
 
 print ("\n")
 p = PermutationOperator
 two_body_eq = simplify_index_permutations(two_body_eq, [p(i, j), p(a, b)])
-print (latex(substitute_dummies(two_body_eq, **sub_kwargs)))
+two_body_eq = substitute_dummies(two_body_eq, **sub_kwargs)
+print (latex(two_body_eq))
+
+print ("\n")
+print (latex(one_body_eq + two_body_eq))
