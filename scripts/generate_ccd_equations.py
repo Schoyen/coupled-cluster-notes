@@ -54,13 +54,6 @@ def compute_hausdorff(h, cluster_func, num_terms=4):
 i, j, k, l = symbols("i, j, k, l", below_fermi=True)
 a, b, c, d = symbols("a, b, c, d", above_fermi=True)
 
-#n_ai = AntiSymmetricTensor("n", (a,), (i,))
-#n_ia = AntiSymmetricTensor("n", (i,), (a,))
-#
-#Dai = n_ai * Fd(a) * F(i)
-#Dia = n_ia * Fd(i) * F(a)
-#D0 = Dai + Dia
-
 h, u = get_hamiltonian()
 
 equation_h = compute_hausdorff(h, get_doubles_cluster_operator)
