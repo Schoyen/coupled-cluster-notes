@@ -70,6 +70,11 @@ sub_kwargs = {
     "pretty_indices": pretty_dummies
 }
 
+energy = wicks(equation_h + equation_u, **wicks_kwargs)
+energy = substitute_dummies(energy, **sub_kwargs)
+print (latex(energy))
+print ("\n")
+
 one_body_eq = wicks(Fd(j) * F(b) *Fd(i) * F(a) * equation_h, **wicks_kwargs)
 
 p = PermutationOperator
