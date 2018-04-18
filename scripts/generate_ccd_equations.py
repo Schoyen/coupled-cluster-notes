@@ -25,7 +25,7 @@ def get_doubles_cluster_operator():
     a, b = symbols("a, b", above_fermi=True, cls=Dummy)
 
     t = AntiSymmetricTensor("t", (a, b), (i, j))
-    t = t * Fd(a) * Fd(b) * F(i) * F(j)
+    t = t * Fd(a) * F(i) * Fd(b) * F(j)
 
     return [Rational(1, 4) * t]
 
