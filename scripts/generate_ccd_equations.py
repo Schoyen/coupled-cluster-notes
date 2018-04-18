@@ -59,17 +59,26 @@ h, u = get_hamiltonian()
 equation_h = compute_hausdorff(h, get_doubles_cluster_operator)
 equation_u = compute_hausdorff(u, get_doubles_cluster_operator)
 
-one_body_eq = wicks(
-        Fd(j) * Fd(i) * F(b) * F(a) * equation_h, simplify_dummies=True,
-        keep_only_fully_contracted=True, simplify_kronecker_deltas=True)
+wicks_kwargs = {
+    "simplify_dummies": True,
+    "keep_only_fully_contracted": True,
+    "simplify_kronecker_deltas": True
+}
+
+sub_kwargs = {
+    "new_indices": True,
+    "pretty_indices": pretty_dummies
+}
+
+one_body_eq = wicks(Fd(j) * F(b) *Fd(i) * F(a) * equation_h, **wicks_kwargs)
 
 p = PermutationOperator
-print (latex(simplify_index_permutations(one_body_eq, [p(a, b), p(i, j)])))
+one_body_eq = simplify_index_permutations(one_body_eq, [p(a, b), p(i, j)])
+print (latex(substitute_dummies(one_body_eq, **sub_kwargs)))
 
-two_body_eq = wicks(
-        Fd(j) * Fd(i) * F(b) * F(a) * equation_u, simplify_dummies=True,
-        keep_only_fully_contracted=True, simplify_kronecker_deltas=True)
+two_body_eq = wicks(Fd(j) * F(b) * Fd(i) * F(a) * equation_u, **wicks_kwargs)
 
 print ("\n")
 p = PermutationOperator
-print (latex(simplify_index_permutations(two_body_eq, [p(i, j), p(a, b)])))
+two_body_eq = simplify_index_permutations(two_body_eq, [p(i, j), p(a, b)])
+print (latex(substitute_dummies(two_body_eq, **sub_kwargs)))
