@@ -30,4 +30,29 @@ def _split_fraction(string):
 def _split_fractions(string_list):
     return [_split_fraction(string) for string in string_list]
 
-    return new_string_list
+def _create_einsum_call(string):
+    if string == "+" or string == "-":
+        return string
+
+    print (string)
+    divisor = re.findall(r"(?<=/)(\d)", string)
+
+    assert len(divisor) < 2, \
+            "The number of divisors is larger than 1 in expression: " \
+            + "{0}".format(string)
+    divisor = float(divisor[0]) if divisor else float(1)
+
+    #matches = re.findall(r"(?<!\{)[a-zA-Z](?!\})", string)
+
+    #for match in matches:
+    #    print (match)
+
+    #print (string)
+    #indices = re.match(r".*\^\{(\w+)\}_\{(\w+)\}.*", string)
+    #print (indices)
+    #print (indices.group(1))
+    #print (indices.group(2))
+    print ("\n")
+
+def _create_einsum_calls(string_list):
+    return [_create_einsum_call(string) for string in string_list]
