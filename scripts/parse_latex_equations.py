@@ -1,11 +1,12 @@
 import re
 import os
 from generate_ccd_equations import get_ccd_equations
+from sympy import latex
 
 filename = "ccd_equations.dat"
 
 if not os.path.isfile(filename):
-    ccd_equations = get_ccd_equations()
+    ccd_equations = [latex(eq) for eq in get_ccd_equations()]
 
     with open(filename, "w") as f:
         for eq in ccd_equations:
