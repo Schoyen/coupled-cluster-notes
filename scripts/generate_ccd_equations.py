@@ -65,44 +65,38 @@ def compute_hausdorff(h, cluster_func, num_terms=4):
     return equation
 
 
-i, j, k, l = symbols("i, j, k, l", below_fermi=True)
-a, b, c, d = symbols("a, b, c, d", above_fermi=True)
+def get_energy_equation(equation_h, equation_u):
+    energy = wicks(equation_h + equation_u, **wicks_kwargs)
+    energy = substitute_dummies(energy, **sub_kwargs)
 
-h, u = get_hamiltonian()
+    return energy
 
-equation_h = compute_hausdorff(h, get_doubles_cluster_operator)
-equation_u = compute_hausdorff(u, get_doubles_cluster_operator)
+def get_one_body_equation(equation_h, equation_u):
+    one_body_eq = wicks(Fd(j) * F(b) *Fd(i) * F(a) * equation_h, **wicks_kwargs)
 
-wicks_kwargs = {
-    "simplify_dummies": True,
-    "keep_only_fully_contracted": True,
-    "simplify_kronecker_deltas": True
-}
+    p = PermutationOperator
+    one_body_eq = simplify_index_permutations(one_body_eq, [p(a, b), p(i, j)])
+    one_body_eq = substitute_dummies(one_body_eq, **sub_kwargs)
 
-sub_kwargs = {
-    "new_indices": True,
-    "pretty_indices": pretty_dummies
-}
+    return one_body_eq
 
-energy = wicks(equation_h + equation_u, **wicks_kwargs)
-energy = substitute_dummies(energy, **sub_kwargs)
-print (latex(energy))
-print ("\n")
+def get_two_body_equation(equation_h, equation_u):
+    two_body_eq = wicks(
+            Fd(j) * F(b) * Fd(i) * F(a) * equation_u, **wicks_kwargs)
 
-one_body_eq = wicks(Fd(j) * F(b) *Fd(i) * F(a) * equation_h, **wicks_kwargs)
+    p = PermutationOperator
+    two_body_eq = simplify_index_permutations(two_body_eq, [p(i, j), p(a, b)])
+    two_body_eq = substitute_dummies(two_body_eq, **sub_kwargs)
 
-p = PermutationOperator
-one_body_eq = simplify_index_permutations(one_body_eq, [p(a, b), p(i, j)])
-one_body_eq = substitute_dummies(one_body_eq, **sub_kwargs)
-print (latex(one_body_eq))
+    return two_body_eq
 
-two_body_eq = wicks(Fd(j) * F(b) * Fd(i) * F(a) * equation_u, **wicks_kwargs)
+def get_ccd_equations():
+    h, u = get_hamiltonian()
+    equation_h = compute_hausdorff(h, get_doubles_cluster_operator)
+    equation_u = compute_hausdorff(u, get_doubles_cluster_operator)
 
-print ("\n")
-p = PermutationOperator
-two_body_eq = simplify_index_permutations(two_body_eq, [p(i, j), p(a, b)])
-two_body_eq = substitute_dummies(two_body_eq, **sub_kwargs)
-print (latex(two_body_eq))
+    energy = get_energy_equation(equation_h, equation_u)
+    one_body = get_one_body_equation(equation_h, equation_u)
+    two_body = get_two_body_equation(equation_h, equation_u)
 
-print ("\n")
-print (latex(one_body_eq + two_body_eq))
+    return latex(energy), latex(one_body + two_body)
