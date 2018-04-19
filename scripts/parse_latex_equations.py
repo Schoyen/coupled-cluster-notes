@@ -15,7 +15,7 @@ else:
     with open(filename, "r") as f:
         ccd_equations = f.read().strip().split("\n")
 
-energy_equation, amplitude_equation = ccd_equations
+_energy_equation, energy_equation = ccd_equations
 print (energy_equation)
 
 def _remove_whitespace_and_empty_strings(string_list):
@@ -56,3 +56,13 @@ def _create_einsum_call(string):
 
 def _create_einsum_calls(string_list):
     return [_create_einsum_call(string) for string in string_list]
+
+
+energy_equation = _remove_whitespace_and_empty_strings(
+    re.split(r"([+-])", energy_equation))
+
+energy_equation = _split_fractions(energy_equation)
+print (energy_equation)
+print ("\n")
+
+print (_create_einsum_calls(energy_equation))
