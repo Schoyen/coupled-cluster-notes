@@ -15,3 +15,7 @@ else:
 
 energy_equation, amplitude_equation = ccd_equations
 print (energy_equation)
+
+def _remove_whitespace_and_empty_strings(string_list):
+    return list(
+            map(lambda x: x.strip(), filter(lambda x: x != "", string_list)))
