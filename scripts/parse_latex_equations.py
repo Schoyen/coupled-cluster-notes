@@ -24,7 +24,7 @@ def _remove_whitespace_and_empty_strings(string_list):
 
 def _split_fraction(string):
     if string.startswith(r"\frac{"):
-        string = re.sub(r"\\frac\{(.*)\}\{(.*)\}", r"\1/\2.0", string)
+        string = re.sub(r"\\frac\{(.*)\}\{(\d)\}", r"\1/\2", string)
     return string
 
 def _split_fractions(string_list):
