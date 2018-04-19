@@ -11,6 +11,7 @@ if not os.path.isfile(filename):
             f.write(eq + "\n")
 else:
     with open(filename, "r") as f:
-        ccd_equations = f.read().split("\n")
+        ccd_equations = f.read().strip().split("\n")
 
-print (ccd_equations)
+energy_equation, amplitude_equation = ccd_equations
+print (energy_equation)
