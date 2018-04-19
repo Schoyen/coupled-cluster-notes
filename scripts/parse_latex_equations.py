@@ -21,6 +21,12 @@ def _remove_whitespace_and_empty_strings(string_list):
     return list(
             map(lambda x: x.strip(), filter(lambda x: x != "", string_list)))
 
+def _split_fraction(string):
+    if string.startswith(r"\frac{"):
+        string = re.sub(r"\\frac\{(.*)\}\{(.*)\}", r"\1/\2.0", string)
+    return string
 
-print (_remove_whitespace_and_empty_strings(
-    re.split(r"([+-])", energy_equation)))
+def _split_fractions(string_list):
+    return [_split_fraction(string) for string in string_list]
+
+    return new_string_list
