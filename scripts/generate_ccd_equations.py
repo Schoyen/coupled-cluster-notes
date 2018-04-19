@@ -10,6 +10,20 @@ pretty_dummies = {
     'general': 'pqrstu'
 }
 
+wicks_kwargs = {
+    "simplify_dummies": True,
+    "keep_only_fully_contracted": True,
+    "simplify_kronecker_deltas": True
+}
+
+sub_kwargs = {
+    "new_indices": True,
+    "pretty_indices": pretty_dummies
+}
+
+i, j, k, l = symbols("i, j, k, l", below_fermi=True)
+a, b, c, d = symbols("a, b, c, d", above_fermi=True)
+
 def get_hamiltonian():
     p, q, r, s = symbols("p, q, r, s", cls=Dummy)
     h = AntiSymmetricTensor("h", (p,), (q,))
