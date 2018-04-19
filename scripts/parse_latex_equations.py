@@ -1,3 +1,4 @@
+import re
 import os
 from generate_ccd_equations import get_ccd_equations
 
@@ -19,3 +20,7 @@ print (energy_equation)
 def _remove_whitespace_and_empty_strings(string_list):
     return list(
             map(lambda x: x.strip(), filter(lambda x: x != "", string_list)))
+
+
+print (_remove_whitespace_and_empty_strings(
+    re.split(r"([+-])", energy_equation)))
