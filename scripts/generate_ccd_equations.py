@@ -6,7 +6,7 @@ from sympy import symbols, Dummy, Rational, factorial, latex
 
 pretty_dummies = {
     'above': 'cdefgh',
-    'below': 'mno',
+    'below': 'klmn',
     'general': 'pqrstu'
 }
 
@@ -21,8 +21,8 @@ sub_kwargs = {
     "pretty_indices": pretty_dummies
 }
 
-i, j, k, l = symbols("i, j, k, l", below_fermi=True)
-a, b, c, d = symbols("a, b, c, d", above_fermi=True)
+i, j = symbols("i, j", below_fermi=True)
+a, b = symbols("a, b", above_fermi=True)
 
 def get_hamiltonian():
     p, q, r, s = symbols("p, q, r, s", cls=Dummy)
