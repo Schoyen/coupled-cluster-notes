@@ -2,5 +2,6 @@
 *.pkl
 *.swp
 *.dat
+*.p
 
 __pycache__
