@@ -99,4 +99,4 @@ def get_ccd_equations():
     one_body = get_one_body_equation(equation_h, equation_u)
     two_body = get_two_body_equation(equation_h, equation_u)
 
-    return latex(energy), latex(one_body + two_body)
+    return energy, one_body + two_body
