@@ -63,11 +63,24 @@ def get_ccsd_lambda_operators():
     return (L_1, L_2)
 
 
-p, q = symbols("p, q", cls=Dummy)
-c_pq = Fd(p) * F(q)
-
-T = sum(get_ccsd_t_operators())
-L = sum(get_ccsd_lambda_operators())
+symbol_list = [
+    ("rho^{b}_{a} = ", symbols("p, q", above_fermi=True, cls=Dummy)),
+    (
+        "rho^{i}_{a} = ",
+        (
+            symbols("p", above_fermi=True, cls=Dummy),
+            symbols("q", below_fermi=True, cls=Dummy),
+        ),
+    ),
+    (
+        "rho^{a}_{i} = ",
+        (
+            symbols("p", below_fermi=True, cls=Dummy),
+            symbols("q", above_fermi=True, cls=Dummy),
+        ),
+    ),
+    ("rho^{j}_{i} = ", symbols("p, q", below_fermi=True, cls=Dummy)),
+]
 
 
 def eval_equation(eq):
@@ -78,29 +91,23 @@ def eval_equation(eq):
     return eq
 
 
-# Only keep non-zero terms
+for label, (p, q) in symbol_list:
+    c_pq = Fd(p) * F(q)
 
-rho_eq = eval_equation(c_pq)
-rho_eq += eval_equation(Commutator(c_pq, T))
-rho_eq += eval_equation(L * c_pq)
-comm = Commutator(c_pq, T)
-rho_eq += eval_equation(L * comm)
-comm = Commutator(comm, sum(get_ccsd_t_operators()))
-rho_eq += Rational(1, 2) * eval_equation(L * comm)
-# rho_eq = wicks((1 - T) * c_pq * (1 + T), **wicks_kwargs)
-# rho_eq += wicks(
-#    L
-#    * (1 - T + Rational(1, 2) * T * T)
-#    * c_pq
-#    * (1 + T + Rational(1, 2) * T * T),
-#    **wicks_kwargs
-# )
+    T = sum(get_ccsd_t_operators())
+    L = sum(get_ccsd_lambda_operators())
 
-rho = rho_eq.expand()
-# rho = wicks(rho_eq, **wicks_kwargs)
-for term in rho.args:
-    print(evaluate_deltas(term))
-rho = evaluate_deltas(rho)
-rho = substitute_dummies(rho, **sub_kwargs)
+    # Only keep non-zero terms
+    rho_eq = eval_equation(c_pq)
+    rho_eq += eval_equation(Commutator(c_pq, T))
+    rho_eq += eval_equation(L * c_pq)
+    comm = Commutator(c_pq, T)
+    rho_eq += eval_equation(L * comm)
+    comm = Commutator(comm, sum(get_ccsd_t_operators()))
+    rho_eq += Rational(1, 2) * eval_equation(L * comm)
 
-print(latex(rho))
+    rho = rho_eq.expand()
+    rho = evaluate_deltas(rho)
+    rho = substitute_dummies(rho, **sub_kwargs)
+
+    print(label + latex(rho))
