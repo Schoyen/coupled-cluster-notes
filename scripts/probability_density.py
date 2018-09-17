@@ -26,4 +26,17 @@ tilde_t_eq = tilde_t_eq.expand()
 tilde_t_eq = evaluate_deltas(tilde_t_eq)
 tilde_t_eq = substitute_dummies(tilde_t_eq, **sub_kwargs)
 
+tilde_eq = Rational(1, 1)
+tilde_eq += eval_equation(L)
+tilde_eq += eval_equation(-L * T)
+tilde_eq += eval_equation(L * T_t)
+tilde_eq += eval_equation(-L * T * T_t)
+tilde_eq += eval_equation(Rational(1, 2) * L * T ** 2)
+tilde_eq += eval_equation(Rational(1, 2) * L * T_t ** 2)
+
+tilde_eq = tilde_eq.expand()
+tilde_eq = evaluate_deltas(tilde_eq)
+tilde_eq = substitute_dummies(tilde_eq, **sub_kwargs)
+
 print(latex(tilde_t_eq))
+print(latex(tilde_eq))
