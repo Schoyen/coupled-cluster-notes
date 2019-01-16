@@ -2,7 +2,7 @@ from sympy.physics.secondquant import evaluate_deltas, substitute_dummies
 
 from sympy import Rational, latex
 
-from one_body_density_matrices import (
+from one_body_density_matrix_ccsd import (
     get_ccsd_t_operators,
     get_ccsd_lambda_operators,
     eval_equation,
